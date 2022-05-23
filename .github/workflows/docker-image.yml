@@ -10,18 +10,18 @@ jobs:
 
   build:
 
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
-    - name: winpty docker login
+    - name: docker login
       env:
         DOCKER_USER: ${{secrets.DOCKERHUB_USER}}
         DOCKER_PASSWORD: ${{secrets.DOCKERHUB_PW}}
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD 
     - name: Build the Docker image
-      run: docker build /running/ibas/tomcat --file Dockerfile --tag nicholascrotty/schedulingimage:$(date +%s)
+      run: docker build /running/ibas/tomcat --file dockerfile --tag nicholascrotty/schedulingimage:$(date +%s)
       
     - name: Docker Push
       run: docker push nicholascrotty/schedulingimage
